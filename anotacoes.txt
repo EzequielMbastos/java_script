@@ -1,0 +1,47 @@
+javascritp = comportamento
+responder acoes do usuario 
+manipular elementos da pagina 
+
+parte publica do sistema, pode ser visto(nao usar dados sensiveis(estes ficam no backend))
+nao pode ter regra de negocio complexa, apenas chamadas para backend
+javascritp faz orquestracao apenas, backend cuida de pgar dados e persistir no banco de dados
+JSON e padrao para troca de dados ? o que e, pra que serve
+autenticação ? 
+
+camelCase primeiraPalavraSegundaPalavra Variáveis e funções em JavaScript e Java snake_case primeira_palavra_segunda_palavra
+Variáveis e funções em Python, e colunas de Banco de Dados
+kebab-case primeira-palavra-segunda-palavra URLs, HTML/CSS e nomes de arquivos de sistema
+PascalCase PrimeiraPalavraSegundaPalavra Classes, Interfaces e Componentes (Java, C#, TS)
+
+console.log("mensagem") exibi no navegador, pequenos dbugs, coisas simples
+prompt("mensagem")
+
+Notyf e sweetalert - biblioteca para notificacoes
+
+Variáveis const(padrao) e let(pode ser alterado)
+
+js tem tipagem dinamica, define a variavel de acordo com a entrada
+
+PArsers
+
+String() - texto
+Number() - numero 
+boolean() - true ou false
+parsInt() - num inteiro melhor evitar porque mascara erro 
+parseFloat() - decimal 
+
+em js ** e potencia 2 ** 3 = 8;
+
+para imprimir na tela padrao é alert(`O resultado da soma é ${nome}`);
+` = usa crase para dizer que fara nesse padrao 
+${} para dizer que é variavel ou cauculo
+
+** calculo e problematico pela base da arquitetura do binario, geralemte as linguagens tem um biblioteca para lidar com calculo, java
+
+JS = tem funcoes deve ser limitadas e com resposabilidades unicas por boas praticas.
+
+seletores em css Classe = .Classe id = #id TAG = P
+agora vamos usar em javascrit. 
+
+textContent: "" na inspecao e entrada de texto do elemento html
+ Value e a entrada de numerocampo de texto
