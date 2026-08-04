@@ -10,7 +10,6 @@ async function buscarProdutos(){
         console.error(error);
     }
 }
-
 function popularTabela(produtos){
     let html = "";
     for(const produto of produtos){
@@ -25,8 +24,8 @@ function popularTabela(produtos){
                 <button class="btn btn-danger" onclick="apagarProduto(${produto.id})">
                     Remover
                 </button>
-                <button class="btn btn-primary">
-                    Atualizar
+                <button class="btn btn-primary" onclick="editarProduto(${produto.id})">
+                    Editar
                 </button>
             </td>
         </tr>
@@ -35,7 +34,6 @@ function popularTabela(produtos){
     const tbody = document.querySelector('#table_produtos tbody');
     tbody.innerHTML = html;
 }
-
 async function apagarProduto(id){
     if (!confirm("Realmente deseja apagar este produto?")) {
         return;
@@ -53,9 +51,51 @@ async function apagarProduto(id){
         buscarProdutos();
     }
 }
-
+function modalNovoProduto(){
+    limparFormulario();
+    abrirModal();
+}
+async function editarProduto(id){
+    const url = `${API_URL}/${id}`;
+    try {
+        const resposta = await fetch(url);
+        const produto = await resposta.json();
+        popularFormulario(produto);
+        abrirModal();
+    } catch (error) {
+        alert("Não foi possivel editar este produto.");
+    }
+}
+function salvarProduto(){
+    const id = Number(document.querySelector("#id").value) || 0;
+    const nome = document.querySelector("#nome").value;
+    const preco = document.querySelector("#preco").value;
+    const quantidade = document.querySelector("#quantidade").value;
+    //não permitir campos vazios
+    if (
+        nome == ""  || 
+        preco == "" || 
+        quantidade == ""
+    ) {
+        alert("Todos os campos são obrigatórios");
+        return;
+    }
+    // Não permitir valores não numerico para preco
+    if(!Number(preco) || !Number(quantidade)){
+        alert("Campo preço e quantiodade devem ser numericos!")
+        return;
+    }
+    if(id){
+        atualizarProduto(id);
+        return;
+    }
+    criarProduto();
+}
+function criarObjetoProduto(){
+    return {nome: document.querySelector("#nome").value, preco : document.querySelector("#preco").value, quantidade : document.querySelector("#quantidade").value}
+}
 async function criarProduto(){
-    const produto = {nome: document.querySelector("#nome").value, preco : document.querySelector("#preco").value, quantidade : document.querySelector("#quantidade").value}
+    const produto = criarObjetoProduto();
    
     try {
         await fetch(API_URL, {
@@ -73,26 +113,50 @@ async function criarProduto(){
         alert("Nao foi possivel adicionar o produto!")    
     }
 }
+async function atualizarProduto(id){
+    const produto = criarObjetoProduto();
+    const url = `${API_URL}/${id}`;
+       try {
+        await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(produto)
+        });
+        limparFormulario();
+        fecharModal();
+        buscarProdutos();
 
+    } catch (error) { 
+        alert("Nao foi possivel editar o produto!")    
+    }
+}
+function popularFormulario(produto){
+    document.querySelector("#id").value = produto.id;
+    document.querySelector("#nome").value = produto.nome;
+    document.querySelector("#preco").value = produto.preco;
+    document.querySelector("#quantidade").value = produto.quantidade;
+}
 function limparFormulario(){
+    document.querySelector("#id").value = "";
     document.querySelector("#nome").value = "";
     document.querySelector("#preco").value = "";
     document.querySelector("#quantidade").value = "";
 }
-
+function abrirModal(){
+    const modalHtml = document.querySelector("#modalProduto");
+    const modal = bootstrap.Modal.getOrCreateInstance(modalHtml);
+    modal.show();
+}
 function fecharModal(){
     const modalHtml = document.querySelector("#modalProduto");
     const modal = bootstrap.Modal.getOrCreateInstance(modalHtml);
     modal.hide();
 }
-async function atualizarProduto(id){
-
-}
-
 function calcularTotal(preco, quantidade){
     const resultado = Number(preco)  * Number(quantidade);
     return resultado.toFixed(2);
 }
-
 buscarProdutos();
 

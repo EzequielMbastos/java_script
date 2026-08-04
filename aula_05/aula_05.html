@@ -16,8 +16,7 @@
       <button
         type="button"
         class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#modalProduto"
+        onclick="modalNovoProduto()"
       >
         Novo produto
       </button>
@@ -55,6 +54,7 @@
             ></button>
           </div>
           <div class="modal-body">
+            <input type="hidden" name="id" id="id" />
             <div class="mb-3">
               <label for="nome" class="form-label">Produto:</label>
               <input type="text" name="nome" id="nome" class="form-control" />
@@ -84,7 +84,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              onclick="criarProduto()"
+              onclick="salvarProduto()"
             >
               Salvar Produto
             </button>
